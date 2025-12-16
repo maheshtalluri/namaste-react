@@ -4,14 +4,29 @@ import { restaurants } from "../utils/restraurantsData";
 
 const Body = () => {
   const [filterRes, setFilterRes] = useState(restaurants);
+  const [searchInput, setSearchInput] = useState("");
 
   const filter = () => {
     const fiterRestraurants = restaurants.filter((item) => item.rating >= 4.5);
     // console.log(fiterRestraurants);
     setFilterRes(fiterRestraurants);
   };
+  const searchFilter = (event) => {
+    const searchList = event.target.value;
+    setSearchInput(searchList);
+    const searchFilterList = restaurants.filter((item) =>
+      item.name.toLowerCase().includes(searchList.toLowerCase())
+    );
+    setFilterRes(searchFilterList);
+    console.log(searchInput);
+    setFilterRes(searchFilterList);
+  };
   return (
     <div>
+      <div className="search">
+        <input type="text" onChange={searchFilter} value={searchInput} />
+        <button>Search</button>
+      </div>
       <div>
         <button className="filter-btn" onClick={filter}>
           Top Rated Restraurants
